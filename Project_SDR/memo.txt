@@ -1,0 +1,155 @@
+-- 프로젝트 주제 : 강의신청시스템(관리자, 학생, 강사 - 공지, 메시지)
+-- WebContent > main.jsp
+
+-- 회원 테이블
+drop sequence mem_seq;
+create sequence mem_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+
+drop table edu_member purge;
+create table edu_member(
+	no number primary key,
+	name varchar2(20) not null,
+	id varchar2(12) not null,
+	pw varchar2(12) not null,
+	email varchar2(20) not null,
+	hp1 number,
+	hp2 number,
+	hp3 number,
+	birth varchar2(10),
+	rank number default 1,
+	joindate varchar2(20) 			
+);
+
+insert into edu_member(no, name, id, pw, rank, email) 
+values(mem_seq.nextval, '어드민', 'admin', '1234', 0, 'admin@admin.com') ;
+
+insert into edu_member(no, name, id, pw, rank, email) 
+values(mem_seq.nextval, '신동엽', 'shin', '1234', 2, 'shin@gmail.com') ;
+
+insert into edu_member(no, name, id, pw, rank, email) 
+values(mem_seq.nextval, '김연아', 'kim', '1234', 2, 'kim@naver.com') ;
+
+insert into edu_member(no, name, id, pw, rank, email) 
+values(mem_seq.nextval, '박세리', 'park', '1234', 2, 'park@daum.net') ;
+
+insert into edu_member(no, name, id, pw, rank, email) 
+values(mem_seq.nextval, '손흥민', 'son', '1234', 2, 'son@daum.net') ;
+
+commit;
+
+
+col name for  a12
+col id for a12
+col pw for a12
+col rank for 999
+col no for 999
+select no, name, id, pw, rank from edu_member ;
+
+
+-- 강의 테이블
+drop sequence lec_seq ;
+drop table lecture purge ;
+
+create sequence lec_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+
+create table lecture(
+	num number primary key,
+	name varchar2(20) not null,
+	teacher varchar2(20) not null,
+	stuNo varchar2(60),
+	maxcount number default 20, -- 클래스 최대인원
+	lec_date varchar2(30),
+	time varchar2(20),
+	context varchar2(200)
+);
+
+insert into lecture(num, name, teacher, lec_date, time, context) 
+values(lec_seq.nextval, 'JAVA', '신동엽', '2021-03-03~2021-06-03', '08:00~12:00', '수업내용입니다. 구현부터 실행까지');
+
+insert into lecture(num, name, teacher, lec_date, time, context) 
+values(lec_seq.nextval, 'JSP', '김연아', '2021-02-10~2021-06-30', '12:00~16:00', '수업내용입니다. 구현부터 실행까지');
+
+insert into lecture(num, name, teacher, lec_date, time, context) 
+values(lec_seq.nextval, 'JDBC', '박세리', '2021-02-13~2021-06-20', '14:00~18:00', '수업내용입니다. 구현부터 실행까지');
+
+insert into lecture(num, name, teacher, lec_date, time, context) 
+values(lec_seq.nextval, '웹표준', '손흥민', '2021-02-23~2021-06-13', '09:00~13:00', '수업내용입니다. 구현부터 실행까지');
+
+commit;
+
+
+-- 공지 테이블
+drop sequence board_seq ;
+create sequence board_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+drop table edu_board cascade constraints purge ;
+create table edu_board(
+	num number not null primary key,
+	writer varchar2(10) default '관리자',
+	subject varchar2(50) not null,
+	bfile varchar2(50),
+	content varchar2(500) not null,
+	reg_date date not null,
+	count int default 0,
+	re_writer varchar2(1000),
+	re_content varchar2(2000),
+	re_reg_date varchar2(1000)
+);
+
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.01 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-01-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.02 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-02-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.03 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-03-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.04 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-04-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.05 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-05-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.06 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-06-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.07 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-07-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.08 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-08-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.09 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-09-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.10 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-10-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.11 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-11-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2020.12 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2020-12-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2021.01 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2021-01-05');
+insert into edu_board(num,subject,content,reg_date) values(board_seq.nextval,'2021.02 공지사항입니다.','홈페이지 유의사항을 공지드립니다.','2021-02-05');
+
+select num, writer, subject, reg_date, count
+ from (select rownum as rank, num, writer, subject, reg_date, count
+ from (select num, writer, subject, reg_date, count
+ from edu_board order by num desc))
+ where rank between 1 and 10;
+
+-- 메시지 테이블
+drop sequence msg_seq ;
+create sequence msg_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 10000
+nocache;
+
+drop table msg_board cascade constraints purge ;
+create table msg_board(
+	num number not null primary key,
+	writer varchar2(10) not null,
+	subject varchar2(50) not null,
+	toInfo varchar2(40) not null, -- id-name
+	content varchar2(500) not null,
+	reg_date varchar2(20) default sysdate,
+	toRead int default 1
+);

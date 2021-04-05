@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+	<Resource name="jdbc/OracleDB" 
+		auth="Container"
+		type="javax.sql.DataSource" 
+		username="jspid" 
+		password="jsppw"
+		driverClassName="oracle.jdbc.driver.OracleDriver"
+		factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+		url="jdbc:oracle:thin:@localhost:1521:orcl" 
+		maxActive="500"
+		maxIdle="100"
+	/>
+</Context>
+
+<!-- 
+속성 이기 때문에 절대로 이름 바꾸면 안됨
+maxActive : 동시접속자수
+ -->
